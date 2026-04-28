@@ -9,61 +9,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --anime-blue: #3b82f6;
-            --anime-pink: #f472b6;
-            --anime-yellow: #fbbf24;
-            --bg-main: #f0f2f5;
+            --anime-blue: #3b82f6; --anime-pink: #f472b6; --anime-yellow: #fbbf24; --anime-green: #22c55e; --bg-main: #f0f2f5;
         }
-        body {
-            font-family: 'Fredoka', sans-serif;
-            background-color: var(--bg-main);
-            color: #334155;
-        }
+        body { font-family: 'Fredoka', sans-serif; background-color: var(--bg-main); color: #334155; }
         .font-anime { font-family: 'M PLUS Rounded 1c', sans-serif; }
-        
-        .sidebar-item {
-            clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .sidebar-item:hover {
-            transform: translateX(10px);
-            background-color: white;
-        }
-        .sidebar-active {
-            background-color: var(--anime-blue);
-            color: white;
-            box-shadow: 5px 5px 0px #1e3a8a;
-        }
-
-        .anime-card {
-            background: white;
-            border: 3px solid #1e293b;
-            box-shadow: 8px 8px 0px #1e293b;
-            transition: all 0.2s ease;
-        }
-        .anime-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px #3b82f6;
-        }
-
-        .btn-burst {
-            background: #1e293b;
-            color: white;
-            border: 2px solid #1e293b;
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-burst:hover {
-            background: var(--anime-blue);
-            transform: skew(-10deg);
-            box-shadow: 5px 5px 0px #1e3a8a;
-        }
+        .sidebar-item { clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%); transition: all 0.3s; }
+        .sidebar-item:hover { transform: translateX(10px); background-color: white; }
+        .sidebar-active { background-color: var(--anime-blue); color: white !important; box-shadow: 5px 5px 0px #1e3a8a; }
+        .sidebar-active-promo { background-color: var(--anime-pink); color: white !important; box-shadow: 5px 5px 0px #be185d; }
+        .sidebar-active-monitoring { background-color: var(--anime-green); color: white !important; box-shadow: 5px 5px 0px #166534; }
+        .anime-card { background: white; border: 3px solid #1e293b; box-shadow: 8px 8px 0px #1e293b; transition: all 0.2s ease; }
+        .anime-card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px #3b82f6; }
+        .btn-burst { background: #1e293b; color: white; border: 2px solid #1e293b; transition: all 0.2s; position: relative; overflow: hidden; }
+        .btn-burst:hover { background: var(--anime-blue); transform: skew(-10deg); box-shadow: 5px 5px 0px #1e3a8a; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
-
-    <aside class="w-72 bg-white border-r-4 border-slate-800 flex flex-col p-6 gap-8">
+    <aside class="w-72 bg-white border-r-4 border-slate-800 flex flex-col p-6 gap-8 z-10">
         <div class="flex flex-col items-center gap-4">
             <div class="w-24 h-24 border-4 border-slate-800 rounded-2xl overflow-hidden shadow-[6px_6px_0px_#1e293b]">
                 <img src="https://i.ibb.co/Jj18Nz5H/photo-2026-04-27-18-07-46.jpg" alt="Logo" class="w-full h-full object-cover">
@@ -72,27 +34,24 @@
                 GAJAH <span class="text-blue-600 block">PURBA</span>
             </h1>
         </div>
-
         <nav class="space-y-4">
             <div onclick="switchCategory('admin')" id="tab-admin" class="sidebar-item sidebar-active p-4 cursor-pointer flex items-center gap-3">
-                <i class="fas fa-user-shield"></i>
-                <span class="font-bold tracking-wide uppercase">Open Admin</span>
+                <i class="fas fa-user-shield"></i> <span class="font-bold tracking-wide uppercase">Open Admin</span>
             </div>
-            <div onclick="switchCategory('promo')" id="tab-promo" class="sidebar-item p-4 cursor-pointer flex items-center gap-3 font-bold text-slate-400 hover:text-blue-500">
-                <i class="fas fa-tags"></i>
-                <span class="tracking-wide uppercase">Promo</span>
+            <div onclick="switchCategory('promo')" id="tab-promo" class="sidebar-item p-4 cursor-pointer flex items-center gap-3 font-bold text-slate-400 hover:text-pink-500">
+                <i class="fas fa-tags"></i> <span class="tracking-wide uppercase">Promo</span>
+            </div>
+            <div onclick="switchCategory('monitoring')" id="tab-monitoring" class="sidebar-item p-4 cursor-pointer flex items-center gap-3 font-bold text-slate-400 hover:text-green-500">
+                <i class="fas fa-desktop"></i> <span class="tracking-wide uppercase">Monitoring</span>
             </div>
         </nav>
-
-        <div class="mt-auto text-[10px] font-bold text-slate-300 text-center uppercase tracking-[0.2em]">
-            System Status: Overdrive
-        </div>
+        <div class="mt-auto text-[10px] font-bold text-slate-300 text-center uppercase tracking-[0.2em]">System Status: Overdrive</div>
     </aside>
 
-    <main class="flex-1 flex flex-col">
-        <header class="h-24 bg-white border-b-4 border-slate-800 flex items-center justify-between px-12 relative overflow-hidden">
-            <div class="absolute -right-10 top-0 h-full w-40 bg-blue-500 skew-x-[-20deg] opacity-10"></div>
-            <h2 id="header-title" class="font-anime font-extrabold text-3xl italic uppercase text-slate-800">Admin Control</h2>
+    <main class="flex-1 flex flex-col relative bg-slate-50">
+        <header class="h-24 bg-white border-b-4 border-slate-800 flex items-center justify-between px-12 relative overflow-hidden z-10 shadow-sm">
+            <div id="header-accent" class="absolute -right-10 top-0 h-full w-40 bg-blue-500 skew-x-[-20deg] opacity-10 transition-colors duration-300"></div>
+            <h2 id="header-title" class="font-anime font-extrabold text-3xl italic uppercase text-blue-500 transition-colors duration-300">Admin Control</h2>
             <div class="flex items-center gap-4">
                 <div class="text-right">
                     <span class="block text-[10px] font-bold text-blue-500 uppercase italic">Power Level: 9999</span>
@@ -105,7 +64,6 @@
         </header>
 
         <div class="flex-1 p-10 overflow-y-auto">
-            
             <div id="grid-admin" class="space-y-12">
                 <div>
                     <h3 class="font-anime text-sm font-black text-blue-600 uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -162,22 +120,38 @@
             </div>
 
             <div id="grid-promo" class="hidden">
+                <h3 class="font-anime text-sm font-black text-pink-600 uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <span class="w-8 h-1 bg-pink-600"></span> Promo_Systems
+                </h3>
                 <div class="grid grid-cols-4 gap-6">
                     <div class="anime-card p-6 flex flex-col gap-4 border-pink-500 shadow-[8px_8px_0px_#f472b6]">
                         <h4 class="font-black text-lg italic uppercase">TOTO Depo</h4>
                         <button onclick="runBot('TOTO_DEPO')" class="py-2 bg-pink-500 text-white font-bold text-xs rounded shadow-[4px_4px_0px_#be185d] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Jalankan Macro</button>
                     </div>
-                    <div class="anime-card p-6 flex flex-col gap-4 border-pink-500 shadow-[8px_8px_0px_#f472b6]">
-                        <h4 class="font-black text-lg italic uppercase">CITI Depo</h4>
-                        <button onclick="runBot('CITI_DEPO')" class="py-2 bg-pink-500 text-white font-bold text-xs rounded shadow-[4px_4px_0px_#be185d] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Jalankan Macro</button>
+                </div>
+            </div>
+
+            <div id="grid-monitoring" class="hidden">
+                <h3 class="font-anime text-sm font-black text-green-600 uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <span class="w-8 h-1 bg-green-600"></span> Live_Chat_Command
+                </h3>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="anime-card p-8 flex flex-col gap-4 border-green-500 shadow-[8px_8px_0px_#22c55e]">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-black text-xl italic uppercase">Monitor Standar (1080p)</h4>
+                            <i class="fas fa-desktop text-green-500 text-3xl"></i>
+                        </div>
+                        <p class="text-sm font-bold text-slate-500 uppercase mt-2">Format: 1920x1080<br>Grid: 6 Kolom x 2 Baris</p>
+                        <button onclick="runBot('ALL_LIVE_CHAT_1920')" class="mt-4 py-4 bg-green-500 text-white font-black text-sm rounded shadow-[4px_4px_0px_#16a34a] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Launch 26 Monitors (1080p)</button>
                     </div>
-                    <div class="anime-card p-6 flex flex-col gap-4 border-pink-500 shadow-[8px_8px_0px_#f472b6]">
-                        <h4 class="font-black text-lg italic uppercase">CITI To</h4>
-                        <button onclick="runBot('CITI_TO')" class="py-2 bg-pink-500 text-white font-bold text-xs rounded shadow-[4px_4px_0px_#be185d] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Jalankan Macro</button>
-                    </div>
-                    <div class="anime-card p-6 flex flex-col gap-4 border-pink-500 shadow-[8px_8px_0px_#f472b6]">
-                        <h4 class="font-black text-lg italic uppercase">CITI IP</h4>
-                        <button onclick="runBot('CITI_IP')" class="py-2 bg-pink-500 text-white font-bold text-xs rounded shadow-[4px_4px_0px_#be185d] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Jalankan Macro</button>
+                    
+                    <div class="anime-card p-8 flex flex-col gap-4 border-yellow-500 shadow-[8px_8px_0px_#eab308]">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-black text-xl italic uppercase">Monitor Besar (2K)</h4>
+                            <i class="fas fa-tv text-yellow-500 text-3xl"></i>
+                        </div>
+                        <p class="text-sm font-bold text-slate-500 uppercase mt-2">Format: 2560x1440<br>Grid: 7 Kolom x 3 Baris</p>
+                        <button onclick="runBot('ALL_LIVE_CHAT_2560')" class="mt-4 py-4 bg-yellow-500 text-slate-900 font-black text-sm rounded shadow-[4px_4px_0px_#a16207] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Launch 26 Monitors (2K)</button>
                     </div>
                 </div>
             </div>
@@ -187,32 +161,41 @@
 
     <script>
         function switchCategory(cat) {
-            const isAdmin = cat === 'admin';
-            document.getElementById('grid-admin').classList.toggle('hidden', !isAdmin);
-            document.getElementById('grid-promo').classList.toggle('hidden', isAdmin);
+            const categories = ['admin', 'promo', 'monitoring'];
+            categories.forEach(id => {
+                document.getElementById('grid-' + id).classList.toggle('hidden', id !== cat);
+                const tab = document.getElementById('tab-' + id);
+                if(id === cat) {
+                    if(cat === 'admin') tab.classList.add('sidebar-active');
+                    if(cat === 'promo') tab.classList.add('sidebar-active-promo');
+                    if(cat === 'monitoring') tab.classList.add('sidebar-active-monitoring');
+                    tab.classList.remove('text-slate-400');
+                } else {
+                    tab.className = 'sidebar-item p-4 cursor-pointer flex items-center gap-3 font-bold text-slate-400';
+                    if(id === 'admin') tab.classList.add('hover:text-blue-500');
+                    if(id === 'promo') tab.classList.add('hover:text-pink-500');
+                    if(id === 'monitoring') tab.classList.add('hover:text-green-500');
+                }
+            });
             
-            document.getElementById('tab-admin').classList.toggle('sidebar-active', isAdmin);
-            document.getElementById('tab-promo').classList.toggle('sidebar-active', !isAdmin);
-            
-            document.getElementById('header-title').innerText = isAdmin ? "Admin Control" : "Promo Systems";
-            document.getElementById('header-title').style.color = isAdmin ? "#3b82f6" : "#f472b6";
+            let title = "Admin Control", color = "#3b82f6", bgAccent = "bg-blue-500";
+            if (cat === 'promo') { title = "Promo Systems"; color = "#f472b6"; bgAccent = "bg-pink-500"; }
+            if (cat === 'monitoring') { title = "Monitoring Base"; color = "#22c55e"; bgAccent = "bg-green-500"; }
+
+            const headerTitle = document.getElementById('header-title');
+            headerTitle.innerText = title; headerTitle.style.color = color;
+            document.getElementById('header-accent').className = `absolute -right-10 top-0 h-full w-40 ${bgAccent} skew-x-[-20deg] opacity-10 transition-colors duration-300`;
         }
 
         function runBot(botId) {
-            // URL MENGARAH KE KOMPUTER MASING-MASING PENGGUNA
             fetch(`http://localhost:3000/run-bot/${botId}`)
-                .then(res => res.text())
-                .then(msg => console.log("System response:", msg))
-                .catch(err => {
-                    alert("Gagal terhubung! Pastikan Bridge lokal (server.js) sudah dijalankan di komputer Anda.");
-                    console.error(err);
-                });
+                .then(res => res.text()).then(msg => console.log("System response:", msg))
+                .catch(err => { alert("Gagal terhubung! Pastikan file Mesin Gajah Purba sudah menyala."); });
         }
 
         function runAllAdminGroup() {
-            const adminList = ['ALL_ADMIN_TOTO', 'ALL_ADMIN_WL', 'ALL_ADMIN_P21', 'ALL_ADMIN_CITI'];
-            if(confirm("AKTIFKAN SEMUA MODUL ADMIN?")) {
-                adminList.forEach(id => runBot(id));
+            if(confirm("PERINGATAN: Ini akan membuka 20 jendela Chrome!\n\nYakin?")) {
+                runBot('EXECUTE_ALL_GROUPS');
             }
         }
     </script>
