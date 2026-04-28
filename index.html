@@ -227,7 +227,7 @@
             document.getElementById('login-error').classList.add('hidden');
             
             try {
-                const res = await fetch('http://localhost:3000/api/check-auth', {
+                const res = await fetch('http://localhost:3001/api/check-auth', {
                     headers: { 'x-user': user, 'x-pass': pass }
                 });
                 if (res.ok) {
@@ -294,7 +294,7 @@
 
         function runBot(botId) {
             showToast(`Meluncurkan ${botId}...`);
-            fetch(`http://localhost:3000/run-bot/${botId}`, { headers: getAuthHeaders() })
+            fetch(`http://localhost:3001/run-bot/${botId}`, { headers: getAuthHeaders() })
                 .then(res => { if(res.status === 401) logout(); })
                 .catch(err => alert("Gagal terhubung ke Mesin Utama. Pastikan terminal Node.js menyala."));
         }
@@ -308,7 +308,7 @@
         function globalControl(action) {
             let msg = action === 'kill-all' ? 'Menghentikan Sistem...' : (action === 'refresh-all' ? 'Memuat Ulang Browser...' : 'Menata Ulang Layar...');
             showToast(msg);
-            fetch(`http://localhost:3000/api/control/${action}`, { headers: getAuthHeaders() })
+            fetch(`http://localhost:3001/api/control/${action}`, { headers: getAuthHeaders() })
                 .then(res => { if(res.status === 401) logout(); })
                 .catch(err => alert("Gagal mengeksekusi kontrol global."));
         }
