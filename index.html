@@ -23,9 +23,25 @@
         .btn-burst { background: #1e293b; color: white; border: 2px solid #1e293b; transition: all 0.2s; position: relative; overflow: hidden; }
         .btn-burst:hover { background: var(--anime-blue); transform: skew(-10deg); box-shadow: 5px 5px 0px #1e3a8a; }
         
-        /* Loading Overlay & Animations */
         #loading-toast { display: none; position: fixed; top: 20px; right: 20px; z-index: 100; animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+        .manual-input {
+            width: 100%;
+            border: 2px solid #1e293b;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: #f8fafc;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .manual-input:focus {
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 3px 3px 0px #3b82f6;
+        }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
@@ -43,7 +59,6 @@
     </div>
 
     <div id="main-panel" class="flex w-full h-full opacity-0 pointer-events-none transition-opacity duration-500">
-        
         <aside class="w-72 bg-white border-r-4 border-slate-800 flex flex-col p-6 gap-8 z-10">
             <div class="flex flex-col items-center gap-4">
                 <div class="w-24 h-24 border-4 border-slate-800 rounded-2xl overflow-hidden shadow-[6px_6px_0px_#1e293b]">
@@ -64,7 +79,6 @@
                     <i class="fas fa-desktop"></i> <span class="tracking-wide uppercase">Monitoring</span>
                 </div>
             </nav>
-            
             <div class="mt-auto space-y-4">
                 <div class="text-[10px] font-bold text-slate-400 text-center uppercase tracking-[0.2em]">System Status: Overdrive</div>
                 <button onclick="logout()" class="w-full py-3 bg-red-100 text-red-600 border-2 border-red-600 font-bold uppercase hover:bg-red-600 hover:text-white transition-colors">
@@ -74,24 +88,21 @@
         </aside>
 
         <main class="flex-1 flex flex-col relative bg-slate-50">
-            
             <header class="h-24 bg-white border-b-4 border-slate-800 flex items-center justify-between px-12 relative overflow-hidden z-10 shadow-sm">
                 <div id="header-accent" class="absolute -right-10 top-0 h-full w-40 bg-blue-500 skew-x-[-20deg] opacity-10 transition-colors duration-300"></div>
                 <h2 id="header-title" class="font-anime font-extrabold text-3xl italic uppercase text-blue-500 transition-colors duration-300">Admin Control</h2>
-                
                 <div class="flex items-center gap-6">
                     <div class="flex items-center gap-2 border-r-2 border-slate-200 pr-6">
-                        <button onclick="globalControl('refresh-all')" class="w-12 h-12 bg-blue-100 text-blue-600 border-2 border-slate-800 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors" title="Refresh Semua Jendela">
+                        <button onclick="globalControl('refresh-all')" class="w-12 h-12 bg-blue-100 text-blue-600 border-2 border-slate-800 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-colors">
                             <i class="fas fa-sync-alt text-xl"></i>
                         </button>
-                        <button onclick="globalControl('rearrange-all')" class="w-12 h-12 bg-yellow-100 text-yellow-600 border-2 border-slate-800 flex items-center justify-center hover:bg-yellow-500 hover:text-white transition-colors" title="Rapikan Posisi Jendela">
+                        <button onclick="globalControl('sort-all')" class="w-12 h-12 bg-yellow-100 text-yellow-600 border-2 border-slate-800 flex items-center justify-center hover:bg-yellow-500 hover:text-white transition-colors">
                             <i class="fas fa-th text-xl"></i>
                         </button>
-                        <button onclick="globalControl('kill-all')" class="px-6 h-12 bg-red-600 text-white font-black border-2 border-slate-800 flex items-center justify-center uppercase hover:bg-red-700 shadow-[4px_4px_0px_#7f1d1d] active:shadow-none active:translate-y-1 transition-all" title="Hentikan Semua Bot">
+                        <button onclick="globalControl('kill-all')" class="px-6 h-12 bg-red-600 text-white font-black border-2 border-slate-800 flex items-center justify-center uppercase hover:bg-red-700 shadow-[4px_4px_0px_#7f1d1d]">
                             <i class="fas fa-skull mr-2"></i> GLOBAL KILL
                         </button>
                     </div>
-
                     <div class="flex items-center gap-4">
                         <div class="text-right">
                             <span class="block text-[10px] font-bold text-blue-500 uppercase italic">Power Level: 9999</span>
@@ -105,7 +116,6 @@
             </header>
 
             <div class="flex-1 p-10 overflow-y-auto">
-                
                 <div id="grid-admin" class="space-y-12">
                     <div>
                         <h3 class="font-anime text-sm font-black text-blue-600 uppercase tracking-widest mb-6 flex items-center gap-2">
@@ -142,20 +152,36 @@
                         </div>
                         <div class="grid grid-cols-4 gap-6">
                             <div class="anime-card p-5 bg-white border-blue-500">
-                                <h4 class="font-black text-xs mb-4 uppercase">All Admin Toto</h4>
-                                <button onclick="runBot('ALL_ADMIN_TOTO')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500">OPEN</button>
+                                <h4 class="font-black text-xs mb-3 uppercase">All Admin Toto</h4>
+                                <button onclick="runBot('ALL_ADMIN_TOTO')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500 mb-4 uppercase italic">Open</button>
+                                <div class="space-y-2 border-t-2 border-dashed border-slate-200 pt-3">
+                                    <input type="text" id="user-ALL_ADMIN_TOTO" placeholder="USERNAME" class="manual-input">
+                                    <input type="password" id="pass-ALL_ADMIN_TOTO" placeholder="PASSWORD" class="manual-input">
+                                </div>
                             </div>
                             <div class="anime-card p-5 bg-white border-blue-500">
-                                <h4 class="font-black text-xs mb-4 uppercase">All Admin WL</h4>
-                                <button onclick="runBot('ALL_ADMIN_WL')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500">OPEN</button>
+                                <h4 class="font-black text-xs mb-3 uppercase">All Admin WL</h4>
+                                <button onclick="runBot('ALL_ADMIN_WL')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500 mb-4 uppercase italic">Open</button>
+                                <div class="space-y-2 border-t-2 border-dashed border-slate-200 pt-3">
+                                    <input type="text" id="user-ALL_ADMIN_WL" placeholder="USERNAME" class="manual-input">
+                                    <input type="password" id="pass-ALL_ADMIN_WL" placeholder="PASSWORD" class="manual-input">
+                                </div>
                             </div>
                             <div class="anime-card p-5 bg-white border-blue-500">
-                                <h4 class="font-black text-xs mb-4 uppercase">All Admin P21</h4>
-                                <button onclick="runBot('ALL_ADMIN_P21')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500">OPEN</button>
+                                <h4 class="font-black text-xs mb-3 uppercase">All Admin P21</h4>
+                                <button onclick="runBot('ALL_ADMIN_P21')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500 mb-4 uppercase italic">Open</button>
+                                <div class="space-y-2 border-t-2 border-dashed border-slate-200 pt-3">
+                                    <input type="text" id="user-ALL_ADMIN_P21" placeholder="USERNAME" class="manual-input">
+                                    <input type="password" id="pass-ALL_ADMIN_P21" placeholder="PASSWORD" class="manual-input">
+                                </div>
                             </div>
                             <div class="anime-card p-5 bg-white border-blue-500">
-                                <h4 class="font-black text-xs mb-4 uppercase">All Admin Citi</h4>
-                                <button onclick="runBot('ALL_ADMIN_CITI')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500">OPEN</button>
+                                <h4 class="font-black text-xs mb-3 uppercase">All Admin Citi</h4>
+                                <button onclick="runBot('ALL_ADMIN_CITI')" class="w-full bg-slate-800 text-white py-2 text-[10px] font-bold rounded hover:bg-blue-500 mb-4 uppercase italic">Open</button>
+                                <div class="space-y-2 border-t-2 border-dashed border-slate-200 pt-3">
+                                    <input type="text" id="user-ALL_ADMIN_CITI" placeholder="USERNAME" class="manual-input">
+                                    <input type="password" id="pass-ALL_ADMIN_CITI" placeholder="PASSWORD" class="manual-input">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,7 +212,6 @@
                             <p class="text-sm font-bold text-slate-500 uppercase mt-2">Format: 1920x1080<br>Grid: 6 Kolom x 2 Baris</p>
                             <button onclick="runBot('ALL_LIVE_CHAT_1920')" class="mt-4 py-4 bg-green-500 text-white font-black text-sm rounded shadow-[4px_4px_0px_#16a34a] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all uppercase italic">Launch 26 Monitors (1080p)</button>
                         </div>
-                        
                         <div class="anime-card p-8 flex flex-col gap-4 border-yellow-500 shadow-[8px_8px_0px_#eab308]">
                             <div class="flex justify-between items-start">
                                 <h4 class="font-black text-xl italic uppercase">Monitor Besar (2K)</h4>
@@ -197,7 +222,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
@@ -207,25 +231,19 @@
     </div>
 
     <script>
-        // --- LOGIKA AUTENTIKASI ---
         function checkLoginState() {
             const user = localStorage.getItem('gajah_user');
             const pass = localStorage.getItem('gajah_pass');
             if (user && pass) {
                 document.getElementById('login-screen').classList.add('opacity-0', 'pointer-events-none');
                 document.getElementById('main-panel').classList.remove('opacity-0', 'pointer-events-none');
-            } else {
-                logout();
-            }
+            } else { logout(); }
         }
 
         async function attemptLogin() {
-            // Mengubah input user menjadi huruf kecil agar tidak error jika CapsLock nyala
             const user = document.getElementById('auth-user').value.toLowerCase();
             const pass = document.getElementById('auth-pass').value;
-            
             document.getElementById('login-error').classList.add('hidden');
-            
             try {
                 const res = await fetch('http://localhost:3001/api/check-auth', {
                     headers: { 'x-user': user, 'x-pass': pass }
@@ -234,23 +252,18 @@
                     localStorage.setItem('gajah_user', user);
                     localStorage.setItem('gajah_pass', pass);
                     checkLoginState();
-                } else { 
-                    throw new Error('Invalid'); 
-                }
-            } catch (err) {
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+                } else { throw new Error('Invalid'); }
+            } catch (err) { document.getElementById('login-error').classList.remove('hidden'); }
         }
 
         function logout() {
             localStorage.removeItem('gajah_user');
             localStorage.removeItem('gajah_pass');
-            document.getElementById('auth-pass').value = ''; // Kosongkan password
+            document.getElementById('auth-pass').value = '';
             document.getElementById('main-panel').classList.add('opacity-0', 'pointer-events-none');
             document.getElementById('login-screen').classList.remove('opacity-0', 'pointer-events-none');
         }
 
-        // --- LOGIKA UI: TAB SWITCHER ---
         function switchCategory(cat) {
             const categories = ['admin', 'promo', 'monitoring'];
             categories.forEach(id => {
@@ -263,22 +276,16 @@
                     tab.classList.remove('text-slate-400');
                 } else {
                     tab.className = 'sidebar-item p-4 cursor-pointer flex items-center gap-3 font-bold text-slate-400';
-                    if(id === 'admin') tab.classList.add('hover:text-blue-500');
-                    if(id === 'promo') tab.classList.add('hover:text-pink-500');
-                    if(id === 'monitoring') tab.classList.add('hover:text-green-500');
                 }
             });
-            
             let title = "Admin Control", color = "#3b82f6", bgAccent = "bg-blue-500";
             if (cat === 'promo') { title = "Promo Systems"; color = "#f472b6"; bgAccent = "bg-pink-500"; }
             if (cat === 'monitoring') { title = "Monitoring Base"; color = "#22c55e"; bgAccent = "bg-green-500"; }
-
-            const headerTitle = document.getElementById('header-title');
-            headerTitle.innerText = title; headerTitle.style.color = color;
+            document.getElementById('header-title').innerText = title;
+            document.getElementById('header-title').style.color = color;
             document.getElementById('header-accent').className = `absolute -right-10 top-0 h-full w-40 ${bgAccent} skew-x-[-20deg] opacity-10 transition-colors duration-300`;
         }
 
-        // --- LOGIKA FETCH KE BACKEND ---
         function showToast(msg) {
             document.getElementById('toast-msg').innerText = msg;
             document.getElementById('loading-toast').style.display = 'flex';
@@ -286,40 +293,40 @@
         }
 
         function getAuthHeaders() {
-            return {
-                'x-user': localStorage.getItem('gajah_user'),
-                'x-pass': localStorage.getItem('gajah_pass')
-            };
+            return { 'x-user': localStorage.getItem('gajah_user'), 'x-pass': localStorage.getItem('gajah_pass') };
         }
 
         function runBot(botId) {
+            const userManual = document.getElementById(`user-${botId}`)?.value || '';
+            const passManual = document.getElementById(`pass-${botId}`)?.value || '';
             showToast(`Meluncurkan ${botId}...`);
-            fetch(`http://localhost:3001/run-bot/${botId}`, { headers: getAuthHeaders() })
-                .then(res => { if(res.status === 401) logout(); })
-                .catch(err => alert("Gagal terhubung ke Mesin Utama. Pastikan terminal Node.js menyala."));
+            const url = new URL(`http://localhost:3001/run-bot/${botId}`);
+            if(userManual) url.searchParams.append('u', userManual);
+            if(passManual) url.searchParams.append('p', passManual);
+            fetch(url, { headers: getAuthHeaders() }).catch(() => alert("Gagal koneksi ke server"));
         }
 
         function runAllAdminGroup() {
-            if(confirm("PERINGATAN: Ini akan membuka 20 jendela Chrome!\n\nYakin?")) {
-                runBot('EXECUTE_ALL_GROUPS');
-            }
+            if(!confirm("Yakin jalankan SEMUA grup dengan username yang diketik?")) return;
+            const url = new URL(`http://localhost:3001/run-bot/EXECUTE_ALL_GROUPS`);
+            
+            // Ambil input dari setiap kotak group
+            const ids = ['TOTO', 'WL', 'P21', 'CITI'];
+            ids.forEach(id => {
+                const u = document.getElementById(`user-ALL_ADMIN_${id}`).value;
+                const p = document.getElementById(`pass-ALL_ADMIN_${id}`).value;
+                if(u) url.searchParams.append(`u_${id.toLowerCase()}`, u);
+                if(p) url.searchParams.append(`p_${id.toLowerCase()}`, p);
+            });
+
+            fetch(url, { headers: getAuthHeaders() }).then(() => showToast("Eksekusi Global Dimulai!"));
         }
 
         function globalControl(action) {
-            let msg = action === 'kill-all' ? 'Menghentikan Sistem...' : (action === 'refresh-all' ? 'Memuat Ulang Browser...' : 'Menata Ulang Layar...');
-            showToast(msg);
-            fetch(`http://localhost:3001/api/control/${action}`, { headers: getAuthHeaders() })
-                .then(res => { if(res.status === 401) logout(); })
-                .catch(err => alert("Gagal mengeksekusi kontrol global."));
+            fetch(`http://localhost:3001/api/control/${action}`, { headers: getAuthHeaders() });
         }
 
-        // --- INIT ---
         checkLoginState();
-        
-        // Memungkinkan login dengan menekan tombol Enter pada keyboard
-        document.getElementById("auth-pass").addEventListener("keyup", function(event) {
-            if (event.key === "Enter") { attemptLogin(); }
-        });
     </script>
 </body>
 </html>
